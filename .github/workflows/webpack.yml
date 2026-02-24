@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: Build Projects
 
 on:
   push:
@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
+        project: [kifah-mantine, kifah-shadcn]
 
     steps:
     - uses: actions/checkout@v4
@@ -22,7 +23,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
+    - name: Install and Build ${{ matrix.project }}
+      working-directory: ${{ matrix.project }}
       run: |
         npm install
-        npx webpack
+        npm run build
